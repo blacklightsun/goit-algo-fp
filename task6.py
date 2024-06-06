@@ -83,6 +83,7 @@ items = {
     "cola": {"cost": 15, "calories": 220},
     "potato": {"cost": 25, "calories": 350}
 }
+
 # бюджет на їжу
 budget = 100
 
