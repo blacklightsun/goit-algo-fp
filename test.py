@@ -1,6 +1,49 @@
 import networkx as nx
 
-# дані для побудови схеми (вихідний малюнок тут же у теці)
+
+def dfs_recc(graf, start_v, finish_v, visited_list=None) -> list:
+
+    if visited_list is None:
+        visited_list = list()
+
+    visited_list.append(start_v)
+
+    if start_v == finish_v:
+        path_list = visited_list[:]
+        return path_list
+
+    for neightbor in list(graf[start_v].keys()):
+        if neightbor not in visited_list:
+            path_list = dfs_recc(graf, neightbor, finish_v, visited_list)
+            if path_list is not None:
+                return path_list
+
+
+def wfs_recc(graf, start_v, finish_v, visited_list=None) -> list:
+
+    if visited_list is None:
+        visited_list = list()
+
+    visited_list.append(start_v)
+
+    if start_v == finish_v:
+        path_list = visited_list[:]
+        return path_list
+
+    neightbors_list = list(graf[start_v].keys())
+    if finish_v in neightbors_list:
+        visited_list.append(finish_v)
+        path_list = visited_list[:]
+        return path_list
+    else:
+        for neightbor in neightbors_list:
+            if neightbor not in visited_list:
+                path_list = wfs_recc(graf, neightbor, finish_v, visited_list)
+                if path_list is not None:
+                    return path_list
+
+
+# дані для побудови схеми (малюнок тут же у теці)
 crossing_list = [
     ("Заводська", "Прутська"),
     ("Прутська", "Вокзальна"),
@@ -25,46 +68,32 @@ crossing_list = [
     ("Цецино", "Університет"),
 ]
 
-edge_lenght_list = [2.5, 7.0, 3.0, 1.5, 4.0,
-                    2.0, 3.0, 5.0, 1.5, 2.0,
-                    6.0, 1.0, 5.5, 3.0, 1.5,
-                    1.0, 3.5, 5.0, 2.5, 4.5,
-                    1.5]
 
-# створюємо зважений граф
-G = nx.Graph(crossing_list)
-for i, edge in enumerate(crossing_list):
-    G[edge[0]][edge[1]]['lenght'] = edge_lenght_list[i]
+# побудова схеми метро (графа)
+G = nx.Graph()
+G.add_edges_from(crossing_list)
 
-def dijkstra(graph, start_node):
-    # функція написана по опису алгоритму з конспекту, без підглядання в код з конспекту
-    dist_dict = {node: float('inf') for node in graph.nodes}
-    dist_dict[start_node] = 0
-    unvisited_list = list(graph.nodes)
 
-    while unvisited_list:
-        # print(start_node)
-        # print(unvisited_list)
-        for node in graph[start_node]:
-            if dist_dict[node] > dist_dict[start_node] + graph[start_node][node]['lenght']:
-                dist_dict[node] = dist_dict[start_node] + graph[start_node][node]['lenght']
-        # print(dist_dict)
-        unvisited_list.pop(unvisited_list.index(start_node))
+start_node = "Гравітон"
+finish_node = "Парк ім. Шевченка"
 
-        # пошук найближчої ноди
-        near_node = None
-        near_node_distance = float('inf')
-        # for node in graph[start_node]:
-        for node in dist_dict:
-            if dist_dict[node] < near_node_distance and node in unvisited_list:
-                near_node = node
-                near_node_distance = dist_dict[node]
-        if near_node is not None:
-            start_node = near_node
+print("\n")
+path_dfs = dfs_recc(G, start_node, finish_node)
+if path_dfs is not None:
+    print(
+        f"Шлях від '{start_node}' до '{finish_node}' по методу DFS знайдено після обходу {len(path_dfs)} вузлів:\n{path_dfs}"
+    )
+else:
+    print("Шлях по методу DFS не знайдено.")
 
-    return dist_dict
+print("\n")
 
-start = "Центральна"
-print(f'\nНайкоротші дистанції від станції {start}:')
-for node, dist in dijkstra(G, start).items():
-    print(node, dist)
+path_wfs = wfs_recc(G, start_node, finish_node)
+if path_wfs is not None:
+    print(
+        f"Шлях від '{start_node}' до '{finish_node}' по методу WFS знайдено після обходу {len(path_wfs)} вузлів:\n{path_wfs}"
+    )
+else:
+    print("Шлях по методу WFS не знайдено.")
+
+print("\n")
