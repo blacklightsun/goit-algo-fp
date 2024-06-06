@@ -121,7 +121,8 @@ else:
 input('Для візуалізації обходу бінарної купи в глибину натисність Enter')
 dfs_path = dfs_iterative(graph, start_node.id)
 for i in range(len(dfs_path)):
-    colors = list(reversed(range(1, i + 2)))
+    # colors = list(reversed(range(1, i + 2)))  #інший напрям зміни відтінків
+    colors = list((range(1, i + 2)))
     colors.extend([0 for _ in range(len(dfs_path) - i -1 )])
     # print(colors)
     plt.figure(figsize=(8, 5))
@@ -139,7 +140,8 @@ for i in range(len(dfs_path)):
 input('Для візуалізації обходу бінарної купи в ширину натисність Enter')
 bfs_path = bfs_iterative(graph, start_node.id)
 for i in range(len(bfs_path)):
-    colors = list(reversed(range(1, i + 2)))
+    # colors = list(reversed(range(1, i + 2)))  #інший напрям зміни відтінків
+    colors = list((range(1, i + 2)))
     colors.extend([0 for _ in range(len(bfs_path) - i - 1)])
     plt.figure(figsize=(8, 5))
     nx.draw(graph,

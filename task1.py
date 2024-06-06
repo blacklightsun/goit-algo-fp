@@ -63,17 +63,19 @@ class LinkedList:
             current = current.next
 
     def link_reverse_list(self):
-        # варіант вирішення першої підзадачі через зміну вказівників (On**1)
+        # мій код - варіант вирішення першої підзадачі через зміну вказівників (On**1)
         start_node = self.head
         while start_node.next:
             self.insert_at_beginning(start_node.next.data)
             start_node.next = start_node.next.next
 
     def buble_sort(self):
+        # мій код
         # використовуємо бульбашкове сортування, як найшвидше (On**2)
         # проходимось по списку двома повними циклами
         # не використовуємо сортування вставками та злиттям, бо там потрібні доступи всередину списку по індексу
-        # для чого або треба дублювати зв'язаний список у іншій структурі даних (тобто реалізовувати функцію у іншій структурі даних),
+        # для чого або треба дублювати зв'язаний список у іншій структурі даних (тобто реалізовувати функцію у іншій структурі даних,
+        # тоді нахіба зв'язний список взагалі),
         # або робити це через пошук (складність O2**n) для кожного циклу (тобто кожен пошук елемента - цикл проходу по зв'язаному списку)
         ext_cycle_current_node = self.head
         while ext_cycle_current_node.next:
@@ -85,6 +87,7 @@ class LinkedList:
             ext_cycle_current_node = ext_cycle_current_node.next
 
     def return_last_node(self):
+        # мій код - повертає останню ноду в зв'язному списку
         current = self.head
         while current.next is not None:
             current = current.next
@@ -92,7 +95,7 @@ class LinkedList:
 
 
 def stack_reverse_list(llist) -> None:
-    # варіант вирішення першої підзадачі через стек (On**4 з урахуванням циклів у всіх методах, що використовуються)
+    # мій код - варіант вирішення першої підзадачі (реверсування) через стек (On**4 з урахуванням циклів у всіх методах, що використовуються)
     stack = []
     current = llist.head
     while current:
@@ -103,7 +106,7 @@ def stack_reverse_list(llist) -> None:
         llist.insert_at_end(stack.pop())
 
 def sort_sorted_llist(list1 : LinkedList, list2 : LinkedList) -> LinkedList:
-
+# мій код - сортування сортованих списків у один
     result_llist = LinkedList()
 
     if type(list1) != type(result_llist) or type(list2) != type(result_llist):
@@ -124,6 +127,7 @@ def sort_sorted_llist(list1 : LinkedList, list2 : LinkedList) -> LinkedList:
             result_llist.insert_at_end(current2.data)
             current2 = current2.next
 
+    # коли закінчилися елементи в найкоротшому з вхідних списків - прив'язуємо залишок іншого списку до результуючого
     if current1:
         result_llist.return_last_node().next = current1
 
@@ -167,7 +171,7 @@ llist2.insert_at_beginning(21)
 llist2.insert_at_beginning(13)
 llist2.insert_at_beginning(11)
 llist2.insert_at_beginning(4)
-print("\nЗв'язний список #2:")
+print("\nЗв'язний список #2 (сортований):")
 llist2.print_list()
 
 print('\nРезультат сортування сортованих списків:')

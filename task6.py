@@ -19,7 +19,7 @@ def greedy_algorithm(food_items: dict, budget: int) -> int:
     total_value = 0
     total_cost = 0
     selected_food_list = []
-    print("\nКалорій на 1-ну грошову одиницю (довідково):")
+    print("\nКалорійність на 1-ну грошову одиницю (довідково):")
     for food in food_specs_list:
         print(f'{food.name:9s}: {round(food.ratio, 1):4.1f} кКал/$')  # довідково
         if budget >= food.cost:

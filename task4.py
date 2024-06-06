@@ -42,7 +42,7 @@ def draw_tree(tree_root):
     plt.show()
 
 def add_nodes(center_node, heap, i):
-    # рекурсивна функція для створення дерева з купи, як списку значень
+    # мій код - рекурсивна функція для створення дерева з купи, як списку значень
     if 2 * i + 1 < len(heap):
         left_node = Node(heap[2 * i + 1])
         center_node.left = left_node
